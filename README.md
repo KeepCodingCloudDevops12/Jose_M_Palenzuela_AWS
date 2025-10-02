@@ -61,11 +61,11 @@ Este proyecto despliega automáticamente un **website estático** en **Amazon S3
                           │                        ▲                       │
                           └────────────────────────┼───────────────────────┘
                                                    │
-                                              HTTP Request
+                                             Petición HTTP
                                                    │
                                           ┌────────┴────────┐
                                           │   Navegador     │
-                                          │    (Usuario)    │
+                                          │   (Usuario)     │
                                           └─────────────────┘
 ```
 
