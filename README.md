@@ -4,7 +4,7 @@
 [![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)](https://aws.amazon.com/)
 [![S3](https://img.shields.io/badge/Amazon%20S3-569A31?style=for-the-badge&logo=amazons3&logoColor=white)](https://aws.amazon.com/s3/)
 
-**Práctica Final del Bootcamp Keepcoding AWS**  
+**Práctica Final del módulo AWS de KeepCoding**  
 Despliegue de un website estático en Amazon S3 usando Terraform como Infrastructure as Code (IaC)
 
 ---
