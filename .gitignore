@@ -34,4 +34,4 @@ terraform.rc
 *~
 
 # Ignore Terraform lock file (opcional, algunos equipos lo commitean)
- .terraform.lock.hcl
+ .terraform.lock.hcl.terraform.lock.hcl
