@@ -1,5 +1,5 @@
 # Ejemplo de archivo de variables
-# Copia este archivo a terraform.tfvars y personaliza los valores si lo deseas
+# Renombra este archivo a terraform.tfvars y personaliza los valores si lo deseas
 # Por defecto, estos valores ya están definidos en variables.tf
 
 aws_region     = "eu-west-1"
