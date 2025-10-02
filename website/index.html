@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keepcoding AWS Bootcamp - Práctica Final</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 20px;
+        }
+        .container {
+            text-align: center;
+            padding: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            max-width: 700px;
+            animation: fadeIn 1s ease-in;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        h2 {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+        p {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 30px 0;
+        }
+        .badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .badge:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .success-box {
+            background: rgba(76, 175, 80, 0.3);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+            border-left: 5px solid #4CAF50;
+        }
+        .tech-stack {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+        .tech-stack p {
+            font-size: 1em;
+            margin: 5px 0;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
+        }
+        .info-item {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.9em;
+        }
+        .info-item strong {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">🚀</div>
+        <h1>¡Despliegue Exitoso!</h1>
+        <h2>Website Estático en AWS S3</h2>
+        
+        <p>La infraestructura ha sido desplegada correctamente usando Terraform</p>
+        
+        <div class="badges">
+            <span class="badge">🌍 Irlanda (eu-west-1)</span>
+            <span class="badge">📦 Amazon S3</span>
+            <span class="badge">⚡ Terraform IaC</span>
+            <span class="badge">🔧 Modularizado</span>
+        </div>
+        
+        <div class="success-box">
+            <p><strong>🎓 Bootcamp Keepcoding AWS</strong></p>
+            <p><strong>Práctica Final</strong></p>
+            <p>S3 Static Website Hosting con Terraform</p>
+        </div>
+        
+        <div class="info-grid">
+            <div class="info-item">
+                <strong>📁 Proyecto</strong>
+                practica_final
+            </div>
+            <div class="info-item">
+                <strong>🗂️ Estructura</strong>
+                Modularizada
+            </div>
+            <div class="info-item">
+                <strong>🔐 Acceso</strong>
+                Público HTTP
+            </div>
+            <div class="info-item">
+                <strong>📊 Estado</strong>
+                Activo
+            </div>
+        </div>
+        
+        <div class="tech-stack">
+            <p><strong>🛠️ Stack Tecnológico</strong></p>
+            <p>AWS S3 • Terraform • HTML5 • CSS3</p>
+            <p style="font-size: 0.9em; margin-top: 10px; opacity: 0.9;">
+                Infraestructura como Código (IaC)
+            </p>
+        </div>
+    </div>
+</body>
+</html>
