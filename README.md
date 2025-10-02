@@ -1,507 +1,809 @@
-# Práctica Final AWS - Website Estático en S3
+# 🚀 Práctica Final AWS - Website Estático en S3
 
-## 📋 Descripción
+[![Terraform](https://img.shields.io/badge/Terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white)](https://www.terraform.io/)
+[![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)](https://aws.amazon.com/)
+[![S3](https://img.shields.io/badge/Amazon%20S3-569A31?style=for-the-badge&logo=amazons3&logoColor=white)](https://aws.amazon.com/s3/)
 
-Plantilla de Terraform para desplegar un website estático en Amazon S3 en la región de **Irlanda (eu-west-1)**. El bucket está configurado para servir contenido web públicamente.
+> **Práctica Final del Bootcamp Keepcoding AWS**  
+> Despliegue de un website estático en Amazon S3 usando Terraform como Infrastructure as Code (IaC)
 
-**Proyecto:** `practica_final`  
-**Bootcamp:** Keepcoding AWS  
-**Módulo:** AWS
+---
+
+## 📋 Tabla de Contenidos
+
+- [Descripción](#-descripción)
+- [Arquitectura](#️-arquitectura)
+- [Requisitos Previos](#-requisitos-previos)
+- [Instalación](#-instalación-paso-a-paso)
+- [Despliegue](#-despliegue)
+- [Verificación](#-verificación)
+- [Limpieza](#-limpieza-de-recursos)
+- [Personalización](#-personalización)
+- [Estructura del Proyecto](#-estructura-del-proyecto)
+- [Troubleshooting](#-troubleshooting)
+- [FAQs](#-faqs)
+
+---
+
+## 🎯 Descripción
+
+Este proyecto despliega automáticamente un **website estático** en **Amazon S3** utilizando **Terraform**. La infraestructura se crea en la región de **Irlanda (eu-west-1)** y está configurada para servir contenido HTML públicamente a través de HTTP.
+
+### ✨ Características
+
+- ✅ **Infraestructura como Código** con Terraform
+- ✅ **Despliegue automatizado** en AWS S3
+- ✅ **Website estático funcional** con páginas personalizadas
+- ✅ **Acceso público** configurado correctamente
+- ✅ **Página de error 404** personalizada
+- ✅ **Código modularizado** siguiendo best practices
+- ✅ **Documentación completa**
+
+---
 
 ## 🏗️ Arquitectura
 
-- **Región AWS**: eu-west-1 (Irlanda)
-- **Servicio**: Amazon S3 Static Website Hosting
-- **IaC**: Terraform (modularizado)
-- **Contenido**: HTML5 + CSS3
-- **Acceso**: Público vía HTTP
-
-## 📁 Estructura del Proyecto
-
 ```
-practica_final/
-├── provider.tf                 # Configuración de providers (AWS, Random)
-├── variables.tf                # Definición de variables
-├── terraform.tfvars.example    # Ejemplo de valores para variables
-├── s3_bucket.tf               # Configuración del bucket S3 y políticas
-├── s3_objects.tf              # Objetos/archivos a subir al bucket
-├── outputs.tf                 # Outputs de Terraform
-├── website/
-│   ├── index.html             # Página principal del sitio
-│   └── error.html             # Página de error 404 personalizada
-├── .gitignore                 # Archivos a ignorar en Git
-└── README.md                  # Esta documentación
+┌─────────────────────────────────────────────────┐
+│                                                 │
+│              REGIÓN: eu-west-1                  │
+│                  (Irlanda)                      │
+│                                                 │
+│  ┌──────────────────────────────────────────┐  │
+│  │         Amazon S3 Bucket                 │  │
+│  │  ┌────────────────────────────────────┐  │  │
+│  │  │  Static Website Hosting            │  │  │
+│  │  │  • index.html (página principal)   │  │  │
+│  │  │  • error.html (página 404)         │  │  │
+│  │  │  • Acceso público configurado      │  │  │
+│  │  └────────────────────────────────────┘  │  │
+│  └──────────────────────────────────────────┘  │
+│                      ▲                          │
+└──────────────────────┼──────────────────────────┘
+                       │
+                  HTTP Request
+                       │
+              ┌────────┴────────┐
+              │   Navegador     │
+              │    (Usuario)    │
+              └─────────────────┘
 ```
 
-## 🚀 Requisitos Previos
+### 🔧 Componentes Técnicos
 
-### Software Necesario
+| Componente | Descripción |
+|------------|-------------|
+| **AWS S3** | Bucket configurado como static website hosting |
+| **Terraform** | IaC para automatizar el despliegue |
+| **HTML/CSS** | Páginas web estáticas con diseño responsive |
+| **Región** | eu-west-1 (Irlanda) |
+| **Acceso** | Público vía HTTP |
 
-1. **Terraform** (versión >= 1.0)
+---
+
+## 📋 Requisitos Previos
+
+Antes de comenzar, asegúrate de tener instalado y configurado lo siguiente:
+
+### 1️⃣ Terraform
+
+**Versión requerida:** >= 1.0
+
+#### Instalación:
+
+**macOS:**
+```bash
+brew tap hashicorp/tap
+brew install hashicorp/tap/terraform
+```
+
+**Windows (Chocolatey):**
+```bash
+choco install terraform
+```
+
+**Linux (Ubuntu/Debian):**
+```bash
+wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+sudo apt update && sudo apt install terraform
+```
+
+**Verificar instalación:**
 ```bash
 terraform --version
+# Debería mostrar: Terraform v1.x.x
 ```
 
-2. **AWS CLI** configurado
+### 2️⃣ AWS CLI
+
+**Versión requerida:** >= 2.0
+
+#### Instalación:
+
+**macOS:**
+```bash
+brew install awscli
+```
+
+**Windows:**
+Descarga el instalador desde: https://aws.amazon.com/cli/
+
+**Linux:**
+```bash
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+```
+
+**Verificar instalación:**
+```bash
+aws --version
+# Debería mostrar: aws-cli/2.x.x
+```
+
+### 3️⃣ Cuenta de AWS
+
+Necesitas una cuenta de AWS activa con:
+
+- **Acceso programático** (Access Key ID y Secret Access Key)
+- **Permisos necesarios:**
+  - `s3:CreateBucket`
+  - `s3:PutObject`
+  - `s3:PutBucketPolicy`
+  - `s3:PutBucketWebsite`
+  - `s3:PutBucketPublicAccessBlock`
+  - `s3:DeleteBucket`
+  - `s3:DeleteObject`
+
+### 4️⃣ Git (Opcional)
+
+Para clonar el repositorio:
+
+```bash
+git --version
+```
+
+---
+
+## 🔐 Configuración de Credenciales AWS
+
+### Opción 1: Configuración Interactiva (Recomendada)
+
 ```bash
 aws configure
 ```
 
-### Credenciales AWS
-
-Necesitas credenciales AWS con los siguientes permisos:
-- `s3:CreateBucket`
-- `s3:PutObject`
-- `s3:PutBucketPolicy`
-- `s3:PutBucketWebsite`
-- `s3:PutBucketPublicAccessBlock`
-
-## 📦 Instalación y Despliegue
-
-### Paso 1: Preparar el entorno
-
-```bash
-# Crear el directorio del proyecto
-mkdir practica_final
-cd practica_final
-
-# Crear el subdirectorio para el website
-mkdir website
+Te pedirá:
+```
+AWS Access Key ID [None]: TU_ACCESS_KEY_ID
+AWS Secret Access Key [None]: TU_SECRET_ACCESS_KEY
+Default region name [None]: eu-west-1
+Default output format [None]: json
 ```
 
-### Paso 2: Copiar los archivos
+### Opción 2: Variables de Entorno
 
-Copia todos los archivos de Terraform en el directorio `practica_final/`:
-- `provider.tf`
-- `variables.tf`
-- `terraform.tfvars.example`
-- `s3_bucket.tf`
-- `s3_objects.tf`
-- `outputs.tf`
-- `.gitignore`
+```bash
+export AWS_ACCESS_KEY_ID="tu_access_key"
+export AWS_SECRET_ACCESS_KEY="tu_secret_key"
+export AWS_DEFAULT_REGION="eu-west-1"
+```
 
-Y los archivos HTML en `practica_final/website/`:
-- `index.html`
-- `error.html`
+### Verificar configuración:
 
-### Paso 3: (Opcional) Configurar variables personalizadas
+```bash
+aws sts get-caller-identity
+```
+
+Deberías ver tu Account ID y ARN.
+
+---
+
+## 💾 Instalación Paso a Paso
+
+### Paso 1: Clonar el Repositorio
+
+```bash
+# Clonar el repositorio
+git clone https://github.com/jpalenz77/KC_AWS_Practica-Final_Jose-Palenzuela.git
+
+# Entrar al directorio
+cd KC_AWS_Practica-Final_Jose-Palenzuela
+```
+
+### Paso 2: Verificar la Estructura
+
+```bash
+# Listar archivos
+ls -la
+
+# Deberías ver:
+# provider.tf
+# variables.tf
+# s3_bucket.tf
+# s3_objects.tf
+# outputs.tf
+# terraform.tfvars.example
+# .gitignore
+# README.md
+# website/
+#   ├── index.html
+#   └── error.html
+```
+
+### Paso 3: (Opcional) Personalizar Variables
+
+Si quieres cambiar la configuración por defecto:
 
 ```bash
 # Copiar el archivo de ejemplo
 cp terraform.tfvars.example terraform.tfvars
 
-# Editar con tus valores personalizados (opcional)
+# Editar con tu editor favorito
 nano terraform.tfvars
+# o
+code terraform.tfvars
 ```
 
-### Paso 4: Inicializar Terraform
+**Ejemplo de personalización:**
+
+```hcl
+aws_region     = "eu-west-1"           # Cambiar si quieres otra región
+bucket_prefix  = "mi-website-custom"   # Cambiar el prefijo del bucket
+project_name   = "Mi Proyecto AWS"     # Cambiar el nombre del proyecto
+```
+
+> 💡 **Nota:** Si no creas el archivo `terraform.tfvars`, se usarán los valores por defecto de `variables.tf`
+
+---
+
+## 🚀 Despliegue
+
+### Paso 1: Inicializar Terraform
+
+Este comando descarga los providers necesarios (AWS y Random):
 
 ```bash
 terraform init
 ```
 
-Este comando descargará los providers necesarios (AWS y Random).
+**Salida esperada:**
+```
+Initializing the backend...
+Initializing provider plugins...
+- Finding hashicorp/aws versions matching "~> 5.0"...
+- Finding hashicorp/random versions matching "~> 3.5"...
+- Installing hashicorp/aws v5.x.x...
+- Installing hashicorp/random v3.x.x...
 
-### Paso 5: Validar la configuración
+Terraform has been successfully initialized!
+```
+
+### Paso 2: Validar la Configuración
+
+Verifica que no haya errores de sintaxis:
 
 ```bash
 terraform validate
 ```
 
-Debe mostrar: `Success! The configuration is valid.`
+**Salida esperada:**
+```
+Success! The configuration is valid.
+```
 
-### Paso 6: Ver el plan de ejecución
+### Paso 3: Ver el Plan de Ejecución
+
+Revisa qué recursos se crearán **sin aplicar cambios**:
 
 ```bash
 terraform plan
 ```
 
-Revisa los recursos que se van a crear.
+**Deberías ver:**
+```
+Plan: 7 to add, 0 to change, 0 to destroy.
 
-### Paso 7: Aplicar la configuración
+Changes to Outputs:
+  + bucket_arn       = (known after apply)
+  + bucket_name      = (known after apply)
+  + region           = "eu-west-1"
+  + website_domain   = (known after apply)
+  + website_endpoint = (known after apply)
+```
+
+### Paso 4: Aplicar la Configuración
+
+Despliega la infraestructura:
 
 ```bash
 terraform apply
 ```
 
-Escribe `yes` cuando se te solicite confirmar.
+Se te pedirá confirmación:
+```
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
 
-### Paso 8: Obtener el endpoint
+  Enter a value: 
+```
 
-Terraform mostrará los outputs al finalizar:
+**Escribe `yes` y presiona Enter.**
+
+**Proceso de despliegue (1-2 minutos):**
+```
+random_id.bucket_suffix: Creating...
+random_id.bucket_suffix: Creation complete after 0s
+aws_s3_bucket.static_website: Creating...
+aws_s3_bucket.static_website: Creation complete after 2s
+aws_s3_bucket_website_configuration.static_website_config: Creating...
+aws_s3_bucket_public_access_block.static_website_pab: Creating...
+...
+Apply complete! Resources: 7 added, 0 changed, 0 destroyed.
+```
+
+### Paso 5: Obtener la URL del Website
+
+Al finalizar, verás los **outputs**:
 
 ```
-Apply complete! Resources: 6 added, 0 changed, 0 destroyed.
-
 Outputs:
 
-bucket_arn = "arn:aws:s3:::kp-bt-static-website-abc12345"
-bucket_name = "kp-bt-static-website-abc12345"
+bucket_arn = "arn:aws:s3:::kp-bt-static-website-a1b2c3d4"
+bucket_name = "kp-bt-static-website-a1b2c3d4"
 region = "eu-west-1"
-website_domain = "kp-bt-static-website-abc12345.s3-website-eu-west-1.amazonaws.com"
-website_endpoint = "http://kp-bt-static-website-abc12345.s3-website-eu-west-1.amazonaws.com"
+website_domain = "kp-bt-static-website-a1b2c3d4.s3-website-eu-west-1.amazonaws.com"
+website_endpoint = "http://kp-bt-static-website-a1b2c3d4.s3-website-eu-west-1.amazonaws.com"
 ```
 
-## 🌐 Acceso al Website
+**🎉 ¡Tu website está desplegado!**
 
-Abre la URL del output `website_endpoint` en tu navegador.
+Copia la URL de `website_endpoint` y ábrela en tu navegador.
 
-**💡 Tip Importante**: Usa un navegador en **modo incógnito** para evitar problemas de caché durante las pruebas.
+---
 
-## 🧪 Probar el Website
+## ✅ Verificación
+
+### 1. Verificar en el Navegador
+
+```bash
+# Abrir automáticamente (macOS)
+open $(terraform output -raw website_endpoint)
+
+# Abrir automáticamente (Linux)
+xdg-open $(terraform output -raw website_endpoint)
+
+# Abrir automáticamente (Windows - PowerShell)
+Start-Process (terraform output -raw website_endpoint)
+```
+
+**O copia manualmente la URL del output `website_endpoint`**
+
+### 2. Probar con cURL
+
+```bash
+# Probar página principal
+curl $(terraform output -raw website_endpoint)
+
+# Probar página de error 404
+curl $(terraform output -raw website_endpoint)/pagina-inexistente
+```
+
+### 3. Verificar en AWS Console
+
+1. Ve a: https://console.aws.amazon.com/s3/
+2. Busca el bucket con prefijo `kp-bt-static-website-`
+3. Ve a la pestaña **Properties** → **Static website hosting**
+4. Verifica que esté **Enabled**
+
+### 4. Ver Outputs en Cualquier Momento
+
+```bash
+# Ver todos los outputs
+terraform output
+
+# Ver solo el endpoint
+terraform output website_endpoint
+
+# Ver sin comillas
+terraform output -raw website_endpoint
+```
+
+---
+
+## 💡 Uso del Website
 
 ### Página Principal
-```bash
-# Copiar la URL del output website_endpoint
-curl http://kp-bt-static-website-XXXXX.s3-website-eu-west-1.amazonaws.com
+
+Accede a la URL base para ver la página principal con información del despliegue:
+
+```
+http://kp-bt-static-website-XXXXXXXX.s3-website-eu-west-1.amazonaws.com
 ```
 
 ### Página de Error 404
-```bash
-# Intentar acceder a una página que no existe
-curl http://kp-bt-static-website-XXXXX.s3-website-eu-west-1.amazonaws.com/pagina-inexistente
+
+Intenta acceder a cualquier página que no existe para ver el error personalizado:
+
 ```
+http://kp-bt-static-website-XXXXXXXX.s3-website-eu-west-1.amazonaws.com/no-existe
+```
+
+---
 
 ## 🧹 Limpieza de Recursos
 
-⚠️ **Importante**: Para evitar costos, elimina los recursos cuando termines:
+⚠️ **IMPORTANTE:** Para evitar costos, elimina todos los recursos cuando termines.
+
+### Opción 1: Con Confirmación
 
 ```bash
 terraform destroy
 ```
 
-Escribe `yes` para confirmar la eliminación.
+Se te pedirá confirmación:
+```
+Do you really want to destroy all resources?
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
 
-## 📝 Recursos Creados en AWS
-
-Esta plantilla crea automáticamente:
-
-1. **random_id.bucket_suffix** - ID aleatorio para nombre único
-2. **aws_s3_bucket.static_website** - Bucket S3
-3. **aws_s3_bucket_website_configuration.static_website_config** - Configuración de website
-4. **aws_s3_bucket_public_access_block.static_website_pab** - Configuración de acceso público
-5. **aws_s3_bucket_policy.static_website_policy** - Política de bucket
-6. **aws_s3_object.index** - Archivo index.html
-7. **aws_s3_object.error** - Archivo error.html
-
-## 📂 Descripción de Archivos Terraform
-
-| Archivo | Descripción |
-|---------|-------------|
-| `provider.tf` | Configuración de providers AWS y Random |
-| `variables.tf` | Definición de todas las variables |
-| `s3_bucket.tf` | Creación y configuración del bucket S3 |
-| `s3_objects.tf` | Upload de archivos al bucket |
-| `outputs.tf` | Outputs mostrados tras el despliegue |
-| `terraform.tfvars.example` | Plantilla de variables (opcional) |
-
-## 🔧 Variables Configurables
-
-| Variable | Descripción | Valor por Defecto |
-|----------|-------------|-------------------|
-| `aws_region` | Región de AWS | `eu-west-1` (Irlanda) |
-| `project_name` | Nombre del proyecto | `Keepcoding AWS Bootcamp` |
-| `environment` | Ambiente | `bootcamp` |
-| `bucket_prefix` | Prefijo del bucket | `kp-bt-static-website` |
-| `index_document` | Documento index | `index.html` |
-| `error_document` | Documento de error | `error.html` |
-
-### Personalizar Variables
-
-Crea un archivo `terraform.tfvars`:
-
-```hcl
-aws_region     = "eu-west-1"
-bucket_prefix  = "mi-website-bootcamp"
-project_name   = "Mi Proyecto AWS"
+  Enter a value:
 ```
 
-## 📊 Outputs Disponibles
+**Escribe `yes` y presiona Enter.**
 
-Después del despliegue, obtendrás:
-
-| Output | Descripción | Ejemplo |
-|--------|-------------|---------|
-| `website_endpoint` | URL completa del website | `http://bucket.s3-website-eu-west-1.amazonaws.com` |
-| `bucket_name` | Nombre del bucket | `kp-bt-static-website-abc12345` |
-| `bucket_arn` | ARN del bucket | `arn:aws:s3:::kp-bt-static-website-abc12345` |
-| `website_domain` | Dominio sin protocolo | `bucket.s3-website-eu-west-1.amazonaws.com` |
-| `region` | Región del despliegue | `eu-west-1` |
-
-Para ver los outputs después del despliegue:
+### Opción 2: Sin Confirmación (Automático)
 
 ```bash
-terraform output
-terraform output website_endpoint
+terraform destroy -auto-approve
 ```
+
+**Proceso de eliminación:**
+```
+aws_s3_object.error: Destroying...
+aws_s3_object.index: Destroying...
+aws_s3_object.error: Destruction complete after 1s
+aws_s3_object.index: Destruction complete after 1s
+aws_s3_bucket_policy.static_website_policy: Destroying...
+...
+Destroy complete! Resources: 7 destroyed.
+```
+
+### Verificar Eliminación
+
+```bash
+# Verificar en AWS CLI
+aws s3 ls | grep kp-bt-static-website
+
+# No debería mostrar ningún bucket
+```
+
+---
 
 ## 🎨 Personalización
 
-### Modificar el Contenido HTML
+### Cambiar el Contenido HTML
 
-Edita los archivos en `website/`:
-- `website/index.html` - Página principal
-- `website/error.html` - Página de error
+1. Edita los archivos en `website/`:
+   ```bash
+   nano website/index.html
+   nano website/error.html
+   ```
 
-Luego aplica los cambios:
+2. Aplica los cambios:
+   ```bash
+   terraform apply
+   ```
 
+Terraform detectará automáticamente los cambios (gracias al `etag`) y subirá los archivos actualizados.
+
+### Cambiar la Región
+
+Edita `variables.tf` o crea `terraform.tfvars`:
+
+```hcl
+aws_region = "us-east-1"  # Virginia
+# o
+aws_region = "eu-central-1"  # Frankfurt
+```
+
+Luego:
 ```bash
 terraform apply
 ```
 
-### Añadir más archivos (CSS, JS, imágenes)
+### Añadir más Archivos (CSS, JS, Imágenes)
 
-1. Coloca los archivos en `website/`
+1. Coloca los archivos en `website/`:
+   ```bash
+   mkdir website/css website/js website/images
+   cp mi-estilo.css website/css/
+   ```
+
 2. Añade recursos en `s3_objects.tf`:
+   ```hcl
+   resource "aws_s3_object" "css" {
+     bucket       = aws_s3_bucket.static_website.id
+     key          = "css/style.css"
+     source       = "website/css/style.css"
+     content_type = "text/css"
+     etag         = filemd5("website/css/style.css")
+   }
+   ```
+
+3. Aplica:
+   ```bash
+   terraform apply
+   ```
+
+### Cambiar el Prefijo del Bucket
+
+Edita `terraform.tfvars`:
 
 ```hcl
-resource "aws_s3_object" "style" {
-  bucket       = aws_s3_bucket.static_website.id
-  key          = "style.css"
-  source       = "website/style.css"
-  content_type = "text/css"
-  etag         = filemd5("website/style.css")
-}
-
-resource "aws_s3_object" "logo" {
-  bucket       = aws_s3_bucket.static_website.id
-  key          = "images/logo.png"
-  source       = "website/images/logo.png"
-  content_type = "image/png"
-  etag         = filemd5("website/images/logo.png")
-}
+bucket_prefix = "mi-proyecto-web"
 ```
 
-### Cambiar la Región
+> ⚠️ Esto creará un bucket nuevo. Destruye el anterior primero si ya existe.
 
-Edita `terraform.tfvars` o modifica directamente `variables.tf`:
+---
 
-```hcl
-variable "aws_region" {
-  default = "us-east-1"  # Cambiar a la región deseada
-}
-```
-
-## 🐛 Resolución de Problemas
-
-### Error: "BucketAlreadyExists"
-
-**Causa**: El nombre del bucket ya existe globalmente en AWS.
-
-**Solución**: El random_id debería evitar esto, pero si ocurre, cambia el `bucket_prefix`:
-
-```hcl
-bucket_prefix = "mi-nuevo-prefijo"
-```
-
-### Error: "Error reading website/index.html: no such file or directory"
-
-**Causa**: Los archivos HTML no están en la ubicación correcta.
-
-**Solución**: Asegúrate de que la estructura sea:
+## 📂 Estructura del Proyecto
 
 ```
 practica_final/
-├── (archivos .tf)
-└── website/
-    ├── index.html
-    └── error.html
+│
+├── 📄 provider.tf                # Configuración de providers (AWS, Random)
+├── 📄 variables.tf               # Definición de todas las variables
+├── 📄 s3_bucket.tf              # Bucket S3, configuración y políticas
+├── 📄 s3_objects.tf             # Objetos a subir al bucket
+├── 📄 outputs.tf                # Outputs mostrados tras el despliegue
+├── 📄 terraform.tfvars.example  # Ejemplo de valores de variables
+├── 📄 .gitignore                # Archivos a ignorar en Git
+├── 📄 README.md                 # Esta documentación
+│
+└── 📁 website/                  # Contenido del sitio web
+    ├── 📄 index.html            # Página principal
+    └── 📄 error.html            # Página de error 404
 ```
 
-### Error: "AccessDenied" al crear el bucket
+### Descripción de Archivos
 
-**Causa**: Credenciales AWS sin permisos suficientes.
+| Archivo | Propósito |
+|---------|-----------|
+| `provider.tf` | Define los providers de Terraform (AWS y Random) y sus versiones |
+| `variables.tf` | Declara todas las variables configurables del proyecto |
+| `s3_bucket.tf` | Crea el bucket S3 y configura el website hosting, acceso público y políticas |
+| `s3_objects.tf` | Sube los archivos HTML al bucket |
+| `outputs.tf` | Define qué información se muestra después del despliegue |
+| `terraform.tfvars.example` | Plantilla para personalizar variables (opcional) |
+| `.gitignore` | Excluye archivos sensibles y temporales de Git |
 
-**Solución**: 
-1. Verifica tus credenciales: `aws sts get-caller-identity`
-2. Asegúrate de tener permisos de S3
+---
 
-### El website no carga o muestra XML
+## 🐛 Troubleshooting
 
-**Causas posibles**:
-1. La configuración está propagándose (espera 1-2 minutos)
-2. Caché del navegador
+### Error: "BucketAlreadyExists"
 
-**Soluciones**:
-- Espera unos minutos
-- Usa modo incógnito
-- Limpia la caché del navegador
-- Verifica la URL completa del output
+**Problema:** El nombre del bucket ya existe (los nombres son únicos globalmente).
 
-### Error: "403 Forbidden"
+**Solución:**
+```bash
+# Cambiar el prefijo en terraform.tfvars
+bucket_prefix = "mi-nombre-unico-123"
 
-**Causa**: La política del bucket no está aplicada correctamente.
+# Aplicar de nuevo
+terraform apply
+```
 
-**Solución**:
+### Error: "AccessDenied"
 
+**Problema:** Credenciales AWS incorrectas o sin permisos.
+
+**Solución:**
+```bash
+# Verificar credenciales
+aws sts get-caller-identity
+
+# Reconfigurar
+aws configure
+```
+
+### Error: "No such file or directory: website/index.html"
+
+**Problema:** Los archivos HTML no están en la ubicación correcta.
+
+**Solución:**
+```bash
+# Verificar estructura
+ls -R
+
+# Debe existir:
+# website/index.html
+# website/error.html
+
+# Si no existen, créalos o clona el repo de nuevo
+```
+
+### El Website no Carga
+
+**Posibles causas:**
+
+1. **Propagación en curso** → Espera 1-2 minutos
+2. **Caché del navegador** → Usa modo incógnito (Ctrl+Shift+N)
+3. **URL incorrecta** → Verifica que copies toda la URL del output
+
+**Solución:**
+```bash
+# Ver la URL exacta
+terraform output website_endpoint
+
+# Probar con curl
+curl $(terraform output -raw website_endpoint)
+```
+
+### Error 403 Forbidden
+
+**Problema:** La política del bucket no está aplicada correctamente.
+
+**Solución:**
 ```bash
 # Destruir y recrear
 terraform destroy
 terraform apply
 ```
 
-## 📚 Comandos Útiles de Terraform
+### Terraform se Queda "Colgado"
 
+**Problema:** Proceso interrumpido o lock del estado.
+
+**Solución:**
 ```bash
-# Ver el estado actual
-terraform show
+# Forzar unlock (solo si estás seguro que no hay otro proceso)
+terraform force-unlock LOCK_ID
 
-# Listar recursos
-terraform state list
-
-# Ver un output específico
-terraform output website_endpoint
-
-# Formatear código
-terraform fmt
-
-# Validar configuración
-terraform validate
-
-# Ver plan sin aplicar
-terraform plan
-
-# Aplicar cambios
-terraform apply
-
-# Aplicar sin confirmación
-terraform apply -auto-approve
-
-# Destruir infraestructura
-terraform destroy
-
-# Destruir sin confirmación
-terraform destroy -auto-approve
-
-# Ver el gráfico de dependencias
-terraform graph | dot -Tpng > graph.png
+# Si persiste, elimina archivos de estado local
+rm .terraform.lock.hcl
+rm -rf .terraform
+terraform init
 ```
 
-## 🔐 Seguridad
+---
 
-### Buenas Prácticas Implementadas
+## ❓ FAQs
 
-✅ Bucket con nombre único aleatorio  
-✅ Política de bucket restrictiva (solo GetObject)  
-✅ Tags para identificación  
-✅ Variables parametrizadas  
-✅ .gitignore para archivos sensibles
+### ¿Cuánto cuesta esto?
 
-### Consideraciones de Seguridad
-
-⚠️ **Este website es público por HTTP**:
-- No almacenes información sensible
-- Para HTTPS necesitas CloudFront + ACM
-- No es apto para datos personales o privados
-
-## 💰 Costos Estimados
-
-**S3 Static Website Hosting** (región eu-west-1):
+**Costos estimados (región eu-west-1):**
 - Almacenamiento: ~$0.023 por GB/mes
 - Requests GET: ~$0.0004 por 1,000 requests
-- Transferencia de datos: Primeros 100 GB gratis/mes
+- Transferencia: Primeros 100 GB gratis/mes
 
-**Ejemplo**: Website con 2 archivos HTML (~10 KB) y 1,000 visitas/mes:
-- Almacenamiento: < $0.01/mes
-- Requests: < $0.01/mes
-- **Total estimado: < $0.02/mes**
+**Para esta práctica:** < $0.05/mes (prácticamente gratis)
 
-💡 **Tip**: Usa la capa gratuita de AWS durante el primer año.
+💡 **Tip:** Usa la capa gratuita de AWS (primer año).
 
-## 🧪 Testing
+### ¿Por qué HTTP y no HTTPS?
 
-### Test Manual
+S3 Static Website Hosting solo soporta HTTP directamente. Para HTTPS necesitas:
+- Amazon CloudFront (CDN)
+- AWS Certificate Manager (SSL)
 
-1. Accede al `website_endpoint`
-2. Verifica que carga la página principal
-3. Intenta acceder a `/pagina-inexistente` para ver el error 404
-4. Verifica que el diseño se ve correctamente
+Esto está fuera del scope de esta práctica básica.
 
-### Test desde Terminal
+### ¿Puedo usar mi propio dominio?
 
-```bash
-# Obtener el endpoint
-ENDPOINT=$(terraform output -raw website_endpoint)
+Sí, pero requiere:
+1. Registrar un dominio (Route 53 o externo)
+2. Configurar Route 53 para DNS
+3. Opcionalmente, CloudFront para HTTPS
 
-# Probar página principal
-curl -I $ENDPOINT
+### ¿El bucket es privado o público?
 
-# Probar página de error
-curl -I $ENDPOINT/no-existe
+**Público** para lectura (`s3:GetObject`). Esto es necesario para servir el website. Los usuarios pueden ver el contenido pero no pueden:
+- Listar los archivos del bucket
+- Subir archivos
+- Eliminar archivos
+- Modificar configuración
 
-# Ver contenido HTML
-curl $ENDPOINT
+### ¿Qué pasa si ejecuto `terraform apply` dos veces?
+
+Terraform es **idempotente**. Si no hay cambios, no hará nada:
+```
+No changes. Your infrastructure matches the configuration.
 ```
 
-## 📖 Recursos y Referencias
+### ¿Puedo usar esto en producción?
+
+Esta es una configuración básica para aprendizaje. Para producción considera:
+- ✅ Añadir CloudFront para HTTPS y CDN
+- ✅ Configurar logging del bucket
+- ✅ Habilitar versioning
+- ✅ Añadir backup/replicación
+- ✅ Implementar CI/CD
+- ✅ Usar Terraform workspaces o remote state
+
+### ¿Cómo actualizo el contenido del website?
+
+```bash
+# 1. Edita los archivos HTML
+nano website/index.html
+
+# 2. Terraform detecta los cambios automáticamente
+terraform apply
+
+# 3. Listo! (limpia la caché del navegador si no ves cambios)
+```
+
+---
+
+## 📚 Recursos Adicionales
 
 ### Documentación Oficial
 
-- [Terraform AWS Provider](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
-- [S3 Static Website Hosting](https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html)
-- [Terraform Documentation](https://www.terraform.io/docs)
+- 📖 [Terraform AWS Provider](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
+- 📖 [AWS S3 Static Website Hosting](https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html)
+- 📖 [Terraform Documentation](https://www.terraform.io/docs)
+- 📖 [AWS CLI Reference](https://docs.aws.amazon.com/cli/latest/reference/s3/)
 
-### Tutoriales Útiles
+### Tutoriales y Guías
 
-- [AWS S3 Best Practices](https://docs.aws.amazon.com/AmazonS3/latest/userguide/security-best-practices.html)
-- [Terraform Best Practices](https://www.terraform-best-practices.com/)
-
-## 🎯 Checklist de Entrega
-
-Antes de entregar la práctica, verifica:
-
-- [x] ✅ Código Terraform modularizado (múltiples archivos .tf)
-- [x] ✅ Despliegue en región Irlanda (eu-west-1)
-- [x] ✅ Bucket S3 configurado como static website
-- [x] ✅ Acceso público configurado correctamente
-- [x] ✅ Output con endpoint de conexión
-- [x] ✅ Archivos HTML funcionales incluidos
-- [x] ✅ README.md con documentación completa
-- [x] ✅ .gitignore configurado
-- [x] ✅ Variables parametrizadas
-- [x] ✅ Estructura de proyecto organizada
-- [x] ✅ Website accesible y funcional
-
-## 🚀 Próximos Pasos (Mejoras Opcionales)
-
-Si quieres ampliar la práctica:
-
-1. **Añadir CloudFront** para HTTPS y CDN
-2. **Configurar Route53** para dominio personalizado
-3. **Implementar CI/CD** con GitHub Actions
-4. **Añadir CloudWatch** para métricas
-5. **Versioning del bucket** para backup
-6. **Terraform Remote State** en S3
-
-## 🎓 Información del Proyecto
-
-**Proyecto**: Práctica Final AWS  
-**Directorio**: `practica_final`  
-**Bootcamp**: Keepcoding AWS  
-**Módulo**: Amazon Web Services  
-**Autor**: [Tu Nombre Aquí]  
-**Fecha**: Octubre 2025  
-**Instructor**: [Nombre del Instructor]
+- 🎥 [HashiCorp Learn - Terraform](https://learn.hashicorp.com/terraform)
+- 🎥 [AWS - Getting Started](https://aws.amazon.com/getting-started/)
+- 📝 [Terraform Best Practices](https://www.terraform-best-practices.com/)
 
 ---
 
-## 📞 Soporte
+## 🤝 Contribuciones
 
-Si tienes problemas:
+Si encuentras errores o quieres mejorar este proyecto:
 
-1. Revisa la sección de **Resolución de Problemas**
-2. Verifica los logs: `terraform apply` muestra errores detallados
-3. Consulta la documentación oficial de AWS/Terraform
-4. Contacta con el instructor del bootcamp
+1. Haz un Fork del repositorio
+2. Crea una rama: `git checkout -b feature/mejora`
+3. Haz commit: `git commit -am 'Añade nueva funcionalidad'`
+4. Push: `git push origin feature/mejora`
+5. Abre un Pull Request
 
 ---
 
-## 📝 Notas Finales
+## 📝 Licencia
 
-- El bucket S3 tiene nombre único gracias a `random_id`
-- Los archivos se suben automáticamente desde `website/`
-- El `etag` asegura que los archivos se actualicen si cambian
-- La región está parametrizada pero por defecto es eu-west-1
-- El proyecto sigue las mejores prácticas de Terraform
+Este proyecto es parte del **Bootcamp Keepcoding AWS** y está disponible para fines educativos.
 
-**¡Buena suerte con la práctica final!** 🎉
+---
+
+## 👤 Autor
+
+**José Palenzuela**
+
+- GitHub: [@jpalenz77](https://github.com/jpalenz77)
+- Proyecto: [KC_AWS_Practica-Final_Jose-Palenzuela](https://github.com/jpalenz77/KC_AWS_Practica-Final_Jose-Palenzuela)
+
+---
+
+## 🎓 Información Académica
+
+**Bootcamp:** Keepcoding AWS  
+**Módulo:** Amazon Web Services  
+**Práctica:** Final - S3 Static Website Hosting  
+**Fecha:** Octubre 2025
+
+---
+
+## ⭐ Agradecimientos
+
+Gracias a **Keepcoding** por la formación en AWS y Cloud Computing.
+
+---
+
+<div align="center">
+
+**Si este proyecto te fue útil, dale una ⭐ en GitHub!**
+
+---
+
+Made with ❤️ and ☕ by José Palenzuela
+
+</div>
