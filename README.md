@@ -27,13 +27,13 @@ Despliegue de un website estático en Amazon S3 usando Terraform como Infrastruc
 
 ## 🎯 Descripción
 
-Este proyecto despliega automáticamente un **website estático** en **Amazon S3** utilizando **Terraform**. La infraestructura se crea en la región de **Irlanda (eu-west-1)** y está configurada para servir contenido HTML públicamente a través de HTTP.
+Este proyecto despliega automáticamente una **web estática** en **Amazon S3** utilizando **Terraform**. La infraestructura se crea en la región de **Irlanda (eu-west-1)** y está configurada para servir contenido HTML públicamente a través de HTTP.
 
 ### ✨ Características
 
 - ✅ **Infraestructura como Código** con Terraform
 - ✅ **Despliegue automatizado** en AWS S3
-- ✅ **Website estático funcional** con páginas personalizadas
+- ✅ **Web estática funcional** con páginas personalizadas
 - ✅ **Acceso público** configurado correctamente
 - ✅ **Página de error 404** personalizada
 - ✅ **Código modularizado** siguiendo best practices
@@ -44,11 +44,11 @@ Este proyecto despliega automáticamente un **website estático** en **Amazon S3
 ## 🏗️ Arquitectura
 
 ```
-                          ┌────────────────────────────────────────────────┐
-                          │                                                │
-                          │              REGIÓN: eu-west-1                 │
-                          │                  (Irlanda)                     │
-                          │                                                │
+                          ┌─────────────────────────────────────────────────┐
+                          │                                                 │
+                          │              REGIÓN: eu-west-1                  │
+                          │                  (Irlanda)                      │
+                          │                                                 │
                           │  ┌──────────────────────────────────────────┐  │
                           │  │         Amazon S3 Bucket                 │  │
                           │  │  ┌────────────────────────────────────┐  │  │
@@ -58,8 +58,8 @@ Este proyecto despliega automáticamente un **website estático** en **Amazon S3
                           │  │  │  • Acceso público configurado      │  │  │
                           │  │  └────────────────────────────────────┘  │  │
                           │  └──────────────────────────────────────────┘  │
-                          │                        ▲                       │
-                          └────────────────────────┼───────────────────────┘
+                          │                        ▲                        │
+                          └────────────────────────┼────────────────────────┘
                                                    │
                                              Petición HTTP
                                                    │
@@ -75,7 +75,7 @@ Este proyecto despliega automáticamente un **website estático** en **Amazon S3
 |------------|-------------|
 | **AWS S3** | Bucket configurado como static website hosting |
 | **Terraform** | IaC para automatizar el despliegue |
-| **HTML/CSS** | Páginas web estáticas con diseño responsive |
+| **HTML/CSS** | Páginas web estáticas |
 | **Región** | eu-west-1 (Irlanda) |
 | **Acceso** | Público vía HTTP |
 
@@ -90,17 +90,6 @@ Antes de comenzar, asegúrate de tener instalado y configurado lo siguiente:
 **Versión requerida:** >= 1.0
 
 #### Instalación:
-
-**macOS:**
-```bash
-brew tap hashicorp/tap
-brew install hashicorp/tap/terraform
-```
-
-**Windows (Chocolatey):**
-```bash
-choco install terraform
-```
 
 **Linux (Ubuntu/Debian):**
 ```bash
@@ -120,14 +109,6 @@ terraform --version
 **Versión requerida:** >= 2.0
 
 #### Instalación:
-
-**macOS:**
-```bash
-brew install awscli
-```
-
-**Windows:**
-Descarga el instalador desde: https://aws.amazon.com/cli/
 
 **Linux:**
 ```bash
@@ -237,21 +218,19 @@ ls -la
 Si quieres cambiar la configuración por defecto:
 
 ```bash
-# Copiar el archivo de ejemplo
-cp terraform.tfvars.example terraform.tfvars
+# Renombrar el archivo de ejemplo
+mv terraform.tfvars.example terraform.tfvars
 
 # Editar con tu editor favorito
 nano terraform.tfvars
-# o
-code terraform.tfvars
 ```
 
 **Ejemplo de personalización:**
 
 ```hcl
-aws_region     = "eu-west-1"           # Cambiar si quieres otra región
-bucket_prefix  = "mi-website-custom"   # Cambiar el prefijo del bucket
-project_name   = "Mi Proyecto AWS"     # Cambiar el nombre del proyecto
+aws_region     = "eu-west-1"                    # Cambiar si quieres otra región
+bucket_prefix  = "mi-web-personalizada"         # Cambiar el prefijo del bucket
+project_name   = "Mi Proyecto AWS"              # Cambiar el nombre del proyecto
 ```
 
 > 💡 **Nota:** Si no creas el archivo `terraform.tfvars`, se usarán los valores por defecto de `variables.tf`
@@ -293,7 +272,7 @@ terraform validate
 Success! The configuration is valid.
 ```
 
-### Paso 3: Ver el Plan de Ejecución
+### Paso 3: Ver el Plan
 
 Revisa qué recursos se crearán **sin aplicar cambios**:
 
@@ -313,7 +292,7 @@ Changes to Outputs:
   + website_endpoint = (known after apply)
 ```
 
-### Paso 4: Aplicar la Configuración
+### Paso 4: Aplicar la configuración
 
 Despliega la infraestructura:
 
@@ -351,11 +330,11 @@ Al finalizar, verás los **outputs**:
 ```
 Outputs:
 
-bucket_arn = "arn:aws:s3:::kp-bt-static-website-a1b2c3d4"
-bucket_name = "kp-bt-static-website-a1b2c3d4"
+bucket_arn = "arn:aws:s3:::bucket-practica-final-aws-a1b2c3d4"
+bucket_name = "bucket-practica-final-aws-a1b2c3d4"
 region = "eu-west-1"
-website_domain = "kp-bt-static-website-a1b2c3d4.s3-website-eu-west-1.amazonaws.com"
-website_endpoint = "http://kp-bt-static-website-a1b2c3d4.s3-website-eu-west-1.amazonaws.com"
+website_domain = "bucket-practica-final-aws-a1b2c3d4.s3-website-eu-west-1.amazonaws.com"
+website_endpoint = "http://bucket-practica-final-aws-a1b2c3d4.s3-website-eu-west-1.amazonaws.com"
 ```
 
 **🎉 ¡Tu website está desplegado!**
@@ -394,7 +373,7 @@ curl $(terraform output -raw website_endpoint)/pagina-inexistente
 ### 3. Verificar en AWS Console
 
 1. Ve a: https://console.aws.amazon.com/s3/
-2. Busca el bucket con prefijo `kp-bt-static-website-`
+2. Busca el bucket con prefijo `bucket-practica-final-aws-`
 3. Ve a la pestaña **Properties** → **Static website hosting**
 4. Verifica que esté **Enabled**
 
@@ -420,7 +399,7 @@ terraform output -raw website_endpoint
 Accede a la URL base para ver la página principal con información del despliegue:
 
 ```
-http://kp-bt-static-website-XXXXXXXX.s3-website-eu-west-1.amazonaws.com
+http://bucket-practica-final-aws-XXXXXXXX.s3-website-eu-west-1.amazonaws.com
 ```
 
 ### Página de Error 404
@@ -428,7 +407,7 @@ http://kp-bt-static-website-XXXXXXXX.s3-website-eu-west-1.amazonaws.com
 Intenta acceder a cualquier página que no existe para ver el error personalizado:
 
 ```
-http://kp-bt-static-website-XXXXXXXX.s3-website-eu-west-1.amazonaws.com/no-existe
+http://bucket-practica-final-aws-XXXXXXXX.s3-website-eu-west-1.amazonaws.com/no-existe
 ```
 
 ---
@@ -475,7 +454,7 @@ Destroy complete! Resources: 7 destroyed.
 
 ```bash
 # Verificar en AWS CLI
-aws s3 ls | grep kp-bt-static-website
+aws s3 ls | grep bucket-practica-final-aws
 
 # No debería mostrar ningún bucket
 ```
@@ -736,74 +715,3 @@ terraform apply
 
 # 3. Listo! (limpia la caché del navegador si no ves cambios)
 ```
-
----
-
-## 📚 Recursos Adicionales
-
-### Documentación Oficial
-
-- 📖 [Terraform AWS Provider](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
-- 📖 [AWS S3 Static Website Hosting](https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html)
-- 📖 [Terraform Documentation](https://www.terraform.io/docs)
-- 📖 [AWS CLI Reference](https://docs.aws.amazon.com/cli/latest/reference/s3/)
-
-### Tutoriales y Guías
-
-- 🎥 [HashiCorp Learn - Terraform](https://learn.hashicorp.com/terraform)
-- 🎥 [AWS - Getting Started](https://aws.amazon.com/getting-started/)
-- 📝 [Terraform Best Practices](https://www.terraform-best-practices.com/)
-
----
-
-## 🤝 Contribuciones
-
-Si encuentras errores o quieres mejorar este proyecto:
-
-1. Haz un Fork del repositorio
-2. Crea una rama: `git checkout -b feature/mejora`
-3. Haz commit: `git commit -am 'Añade nueva funcionalidad'`
-4. Push: `git push origin feature/mejora`
-5. Abre un Pull Request
-
----
-
-## 📝 Licencia
-
-Este proyecto es parte del **Bootcamp Keepcoding AWS** y está disponible para fines educativos.
-
----
-
-## 👤 Autor
-
-**José Palenzuela**
-
-- GitHub: [@jpalenz77](https://github.com/jpalenz77)
-- Proyecto: [KC_AWS_Practica-Final_Jose-Palenzuela](https://github.com/jpalenz77/KC_AWS_Practica-Final_Jose-Palenzuela)
-
----
-
-## 🎓 Información Académica
-
-**Bootcamp:** Keepcoding AWS  
-**Módulo:** Amazon Web Services  
-**Práctica:** Final - S3 Static Website Hosting  
-**Fecha:** Octubre 2025
-
----
-
-## ⭐ Agradecimientos
-
-Gracias a **Keepcoding** por la formación en AWS y Cloud Computing.
-
----
-
-<div align="center">
-
-**Si este proyecto te fue útil, dale una ⭐ en GitHub!**
-
----
-
-Made with ❤️ and ☕ by José Palenzuela
-
-</div>

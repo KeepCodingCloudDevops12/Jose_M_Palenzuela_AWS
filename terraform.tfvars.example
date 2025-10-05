@@ -3,8 +3,8 @@
 # Por defecto, estos valores ya están definidos en variables.tf
 
 aws_region     = "eu-west-1"
-project_name   = "Keepcoding AWS Bootcamp"
+project_name   = "Keepcoding Modulo AWS practica final"
 environment    = "bootcamp"
-bucket_prefix  = "kp-bt-static-website"
+bucket_prefix  = "bucket-practica-final-aws"
 index_document = "index.html"
 error_document = "error.html"

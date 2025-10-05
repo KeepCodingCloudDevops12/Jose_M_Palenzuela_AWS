@@ -9,7 +9,7 @@ variable "aws_region" {
 variable "project_name" {
   description = "Nombre del proyecto"
   type        = string
-  default     = "Keepcoding AWS Bootcamp"
+  default     = "Keepcoding Modulo AWS practica final"
 }
 
 variable "environment" {
@@ -21,7 +21,7 @@ variable "environment" {
 variable "bucket_prefix" {
   description = "Prefijo para el nombre del bucket S3"
   type        = string
-  default     = "kp-bt-static-website"
+  default     = "bucket-practica-final-aws"
 }
 
 variable "index_document" {
