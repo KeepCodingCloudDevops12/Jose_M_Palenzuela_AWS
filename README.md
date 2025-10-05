@@ -187,7 +187,7 @@ Deberías ver tu Account ID y ARN.
 
 ```bash
 # Clonar el repositorio
-git clone https://github.com/jpalenz77/KC_AWS_Practica-Final_Jose-Palenzuela.git
+git clone https://github.com/KeepCodingCloudDevops12/Jose_M_Palenzuela_AWS
 
 # Entrar al directorio
 cd KC_AWS_Practica-Final_Jose-Palenzuela
@@ -714,4 +714,5 @@ nano website/index.html
 terraform apply
 
 # 3. Listo! (limpia la caché del navegador si no ves cambios)
+
 ```
