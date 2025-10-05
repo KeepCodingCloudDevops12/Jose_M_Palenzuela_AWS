@@ -3,111 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Error 404 - Página no encontrada</title>
+    <title>404 - Página no encontrada</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: white;
             padding: 20px;
-        }
-        .container {
-            text-align: center;
-            padding: 50px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            max-width: 600px;
-            animation: shake 0.5s ease-in-out;
-        }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
-        .icon {
-            font-size: 5em;
-            margin-bottom: 20px;
-            animation: float 3s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-        .error-code {
-            font-size: 8em;
-            font-weight: bold;
-            margin-bottom: 20px;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
-            background: linear-gradient(45deg, #fff, #f5576c);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1;
-        }
-        h1 {
-            font-size: 2.2em;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-        p {
-            font-size: 1.2em;
-            margin-bottom: 15px;
             line-height: 1.6;
-            opacity: 0.95;
         }
-        .back-link {
+        
+        .container {
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .error-code {
+            font-size: 8rem;
+            font-weight: 800;
+            color: #dc2626;
+            line-height: 1;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+            text-shadow: 0 0 40px rgba(220, 38, 38, 0.3);
+        }
+        
+        .error-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+        
+        .error-description {
+            font-size: 1.1rem;
+            color: #9ca3af;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        
+        .error-box {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-left: 4px solid #dc2626;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 32px;
+            text-align: left;
+        }
+        
+        .error-box-title {
+            font-size: 0.9rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        
+        .error-box-content {
+            color: #e0e0e0;
+            font-size: 1rem;
+        }
+        
+        .back-button {
             display: inline-block;
-            margin-top: 30px;
-            padding: 15px 35px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 30px;
+            background: #1e293b;
+            color: #e0e0e0;
+            padding: 14px 32px;
+            border-radius: 8px;
             text-decoration: none;
-            color: white;
-            font-weight: bold;
-            font-size: 1.1em;
+            font-weight: 600;
+            font-size: 1rem;
+            border: 1px solid #334155;
             transition: all 0.3s ease;
-            border: 2px solid rgba(255, 255, 255, 0.3);
         }
-        .back-link:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        
+        .back-button:hover {
+            background: #334155;
+            border-color: #475569;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
-        .error-info {
-            margin-top: 30px;
+        
+        .suggestions {
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 1px solid #2a2a2a;
+        }
+        
+        .suggestions-title {
+            font-size: 0.9rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .suggestions-list {
+            list-style: none;
+            text-align: left;
+        }
+        
+        .suggestions-list li {
+            padding: 12px 0;
+            color: #9ca3af;
+            font-size: 0.95rem;
+        }
+        
+        .suggestions-list li:before {
+            content: "→";
+            color: #60a5fa;
+            font-weight: bold;
+            margin-right: 12px;
+        }
+        
+        .footer-info {
+            margin-top: 40px;
             padding: 20px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            font-size: 0.9em;
+            background: #111;
+            border-radius: 8px;
+            border: 1px solid #2a2a2a;
+        }
+        
+        .footer-info p {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        
+        .highlight {
+            color: #60a5fa;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 6rem;
+            }
+            
+            .error-title {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="icon">🔍</div>
         <div class="error-code">404</div>
-        <h1>¡Oops! Página no encontrada</h1>
-        <p>Lo sentimos, la página que buscas no existe o ha sido movida.</p>
-        <p>Verifica la URL e inténtalo de nuevo.</p>
+        <h1 class="error-title">Página no encontrada</h1>
+        <p class="error-description">
+            Lo sentimos, la página que estás buscando no existe o ha sido movida.
+        </p>
         
-        <div class="error-info">
-            <p><strong>🎓 Práctica Final - Bootcamp Keepcoding AWS</strong></p>
-            <p>Error personalizado en S3 Static Website</p>
+        <div class="error-box">
+            <div class="error-box-title">¿Qué pasó?</div>
+            <div class="error-box-content">
+                La URL solicitada no coincide con ningún recurso en este servidor S3.
+                Verifica que la dirección sea correcta e inténtalo de nuevo.
+            </div>
         </div>
         
-        <a href="/" class="back-link">← Volver al inicio</a>
+        <a href="/" class="back-button">← Volver al inicio</a>
+        
+        <div class="suggestions">
+            <div class="suggestions-title">Posibles soluciones</div>
+            <ul class="suggestions-list">
+                <li>Verifica que la URL esté escrita correctamente</li>
+                <li>Regresa a la página principal y navega desde allí</li>
+                <li>El recurso puede haber sido movido o eliminado</li>
+                <li>Usa la navegación del sitio para encontrar lo que buscas</li>
+            </ul>
+        </div>
+        
+        <div class="footer-info">
+            <p><strong class="highlight">Bootcamp Keepcoding AWS</strong> • Práctica Final</p>
+            <p>S3 Static Website Hosting con Terraform</p>
+        </div>
     </div>
 </body>
 </html>

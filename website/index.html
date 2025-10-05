@@ -3,170 +3,277 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keepcoding Módulo AWS - Práctica Final</title>
+    <title>Keepcoding AWS Bootcamp - Práctica Final</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: white;
             padding: 20px;
-        }
-        .container {
-            text-align: center;
-            padding: 50px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            max-width: 700px;
-            animation: fadeIn 1s ease-in;
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .icon {
-            font-size: 4em;
-            margin-bottom: 20px;
-            animation: bounce 2s infinite;
-        }
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        h1 {
-            font-size: 3em;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        h2 {
-            font-size: 1.5em;
-            margin-bottom: 30px;
-            font-weight: 300;
-        }
-        p {
-            font-size: 1.2em;
-            margin-bottom: 15px;
             line-height: 1.6;
         }
-        .badges {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin: 30px 0;
+        
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: #1a1a1a;
+            border-radius: 12px;
+            border: 1px solid #2a2a2a;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
-        .badge {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 12px 24px;
-            border-radius: 25px;
-            font-weight: bold;
-            font-size: 0.95em;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+        
+        .header {
+            background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+            padding: 40px;
+            border-bottom: 1px solid #333;
         }
-        .badge:hover {
-            transform: scale(1.05);
-            background: rgba(255, 255, 255, 0.3);
+        
+        .status-badge {
+            display: inline-block;
+            background: #16a34a;
+            color: #fff;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
         }
-        .success-box {
-            background: rgba(76, 175, 80, 0.3);
-            padding: 25px;
-            border-radius: 15px;
-            margin-top: 30px;
-            border-left: 5px solid #4CAF50;
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
         }
-        .tech-stack {
-            margin-top: 25px;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
+        
+        .subtitle {
+            font-size: 1.1rem;
+            color: #9ca3af;
+            font-weight: 400;
         }
-        .tech-stack p {
-            font-size: 1em;
-            margin: 5px 0;
+        
+        .content {
+            padding: 40px;
         }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .section-title {
+            font-size: 0.9rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+        
         .info-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 25px;
+            gap: 16px;
+            margin-bottom: 30px;
         }
-        .info-item {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 15px;
-            border-radius: 10px;
-            font-size: 0.9em;
+        
+        .info-card {
+            background: #111;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s ease;
         }
-        .info-item strong {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 1.1em;
+        
+        .info-card:hover {
+            border-color: #404040;
+            transform: translateY(-2px);
+        }
+        
+        .info-label {
+            font-size: 0.8rem;
+            color: #6b7280;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .info-value {
+            font-size: 1.1rem;
+            color: #e0e0e0;
+            font-weight: 500;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .tech-badge {
+            background: #1e293b;
+            border: 1px solid #334155;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: #94a3b8;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .tech-badge:hover {
+            background: #334155;
+            color: #e2e8f0;
+            border-color: #475569;
+        }
+        
+        .footer {
+            background: #111;
+            padding: 30px 40px;
+            border-top: 1px solid #2a2a2a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .footer-text {
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+        
+        .footer-link {
+            color: #60a5fa;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: #93c5fd;
+        }
+        
+        .divider {
+            height: 1px;
+            background: #2a2a2a;
+            margin: 30px 0;
+        }
+        
+        .highlight {
+            color: #60a5fa;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .header, .content {
+                padding: 30px;
+            }
+            
+            .footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="icon">🚀</div>
-        <h1>¡La infra se ha desplegado con éxito!</h1>
-        <h2>Website Estático en AWS S3</h2>
-        
-        <p>La infraestructura ha sido desplegada correctamente usando Terraform</p>
-        
-        <div class="badges">
-            <span class="badge">🌍 Irlanda (eu-west-1)</span>
-            <span class="badge">📦 Amazon S3</span>
-            <span class="badge">⚡ Terraform IaC</span>
-            <span class="badge">🔧 Modularizado</span>
+        <div class="header">
+            <div class="status-badge">✓ ACTIVO</div>
+            <h1>Infraestructura Desplegada</h1>
+            <p class="subtitle">Website estático en Amazon S3 con Terraform</p>
         </div>
         
-        <div class="success-box">
-            <p><strong>🎓 Keepcoding AWS</strong></p>
-            <p><strong>Práctica Final Jose María Palenzuela Plaza</strong></p>
-            <p>S3 Web Estática con Terraform</p>
+        <div class="content">
+            <div class="section">
+                <div class="section-title">Información del Despliegue</div>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-label">Proyecto</div>
+                        <div class="info-value">practica_final</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">Región AWS</div>
+                        <div class="info-value">eu-west-1 (Irlanda)</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">Servicio</div>
+                        <div class="info-value">Amazon S3</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">IaC Tool</div>
+                        <div class="info-value">Terraform</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <div class="section">
+                <div class="section-title">Stack Tecnológico</div>
+                <div class="tech-stack">
+                    <div class="tech-badge">AWS S3</div>
+                    <div class="tech-badge">Terraform</div>
+                    <div class="tech-badge">Infrastructure as Code</div>
+                    <div class="tech-badge">Static Website Hosting</div>
+                    <div class="tech-badge">HTML5</div>
+                    <div class="tech-badge">CSS3</div>
+                </div>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <div class="section">
+                <div class="section-title">Características</div>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-label">Configuración</div>
+                        <div class="info-value">Modularizada</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">Acceso</div>
+                        <div class="info-value">Público HTTP</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">Error Handling</div>
+                        <div class="info-value">404 Personalizado</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">Estado</div>
+                        <div class="info-value">Desplegado</div>
+                    </div>
+                </div>
+            </div>
         </div>
         
-        <div class="info-grid">
-            <div class="info-item">
-                <strong>📁 Proyecto</strong>
-                practica_final
+        <div class="footer">
+            <div class="footer-text">
+                <strong class="highlight">Bootcamp Keepcoding AWS</strong> • Práctica Final
             </div>
-            <div class="info-item">
-                <strong>🗂️ Estructura</strong>
-                Modularizada
+            <div class="footer-text">
+                <a href="https://github.com/jpalenz77" class="footer-link" target="_blank">José Palenzuela</a>
             </div>
-            <div class="info-item">
-                <strong>🔐 Acceso</strong>
-                Público HTTP
-            </div>
-            <div class="info-item">
-                <strong>📊 Estado</strong>
-                Activo
-            </div>
-        </div>
-        
-        <div class="tech-stack">
-            <p><strong>🛠️ Stack Tecnológico</strong></p>
-            <p>AWS S3 • Terraform • HTML5 • CSS3</p>
-            <p style="font-size: 0.9em; margin-top: 10px; opacity: 0.9;">
-                Infraestructura como Código (IaC)
-            </p>
         </div>
     </div>
 </body>
